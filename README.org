@@ -1,5 +1,5 @@
 * astora
 
-** Arquitetra
+** Arquitetura
 
 [[./docs/astora.png]]
