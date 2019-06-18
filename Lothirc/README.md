@@ -1,6 +1,6 @@
 Documentação Lothirc
 ====================
 
-### Tipos de dados
+## Tipos de dados
 
 * int, float, string, boolean.
