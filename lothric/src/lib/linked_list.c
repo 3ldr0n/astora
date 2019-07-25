@@ -1,6 +1,6 @@
 #include "lib/linked_list.h"
 
-void *smalloc(size_t size)
+void *smalloc(const size_t size)
 {
     if (!size)
         return NULL;
@@ -15,7 +15,7 @@ void *smalloc(size_t size)
     return mem;
 }
 
-void print_list(struct list_t *list)
+void print_list(const struct list_t *list)
 {
     for (struct node *item = list->head;item != NULL;item = item->next)
         printf("%s ", item->value);
@@ -30,12 +30,12 @@ void instanciate_list(struct list_t *list)
     list->size = 0;
 }
 
-bool is_list_empty(struct list_t *list)
+bool is_list_empty(const struct list_t *list)
 {
     return list->head == NULL;
 }
 
-void append(struct list_t *list, void *value)
+void append(struct list_t *list, const void *value)
 {
     struct node *new_node = (struct node *)smalloc(sizeof(struct node *));
     new_node->value = value;

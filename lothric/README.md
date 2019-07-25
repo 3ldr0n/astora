@@ -5,7 +5,7 @@ Documentação Lothirc
 
 * int
 
-* float 
+* float
 
 * string
 
