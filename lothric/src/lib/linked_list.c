@@ -1,6 +1,6 @@
 #include "lib/linked_list.h"
 
-void *smalloc(const size_t size)
+static void *smalloc(const size_t size)
 {
     if (!size)
         return NULL;
@@ -8,7 +8,7 @@ void *smalloc(const size_t size)
     void *mem = malloc(size);
 
     if (!mem) {
-        fprintf(stderr, "Fatal: Erro na alocação (malloc de %zu bytes)\n", size);
+        fprintf(stderr, "Fatal: Memory allocation error (%zu bytes malloc)\n", size);
         exit(EXIT_FAILURE);
     }
 
