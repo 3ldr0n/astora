@@ -2,8 +2,11 @@
 
 /**
  * Malloc seguro, verifica se alocação ocorreu corretamente.
+ *
+ * size:
+ * Tamanho a ser alocado.
  */
-void *smalloc(const size_t size)
+static void *smalloc(const size_t size)
 {
     if (!size)
         return NULL;
@@ -19,18 +22,10 @@ void *smalloc(const size_t size)
 }
 
 /**
- * Imprime todos os elementos da lista.
- */
-void print_list(const struct list_t *list)
-{
-    for (struct node *item = list->head;item != NULL;item = item->next)
-        printf("%s ", item->value);
-
-    printf("\n");
-}
-
-/**
  * Inicializa a lista vazia.
+ *
+ * list:
+ * Ponteiro para o lista.
  */
 void instanciate_list(struct list_t *list)
 {
@@ -41,6 +36,9 @@ void instanciate_list(struct list_t *list)
 
 /**
  * Verifica se a lista está vazia.
+ *
+ * list:
+ * Ponteiro para a lista.
  */
 bool is_list_empty(const struct list_t *list)
 {
@@ -49,6 +47,11 @@ bool is_list_empty(const struct list_t *list)
 
 /**
  * Insere um elemento no final da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
+ * value:
+ * Valor a ser inserido.
  */
 void append(struct list_t *list, const void *value)
 {
@@ -70,6 +73,9 @@ void append(struct list_t *list, const void *value)
 
 /**
  * Remove o primeiro elemento da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
  */
 void remove_first(struct list_t *list)
 {
@@ -89,6 +95,9 @@ void remove_first(struct list_t *list)
 
 /**
  * Remove o último elemento da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
  */
 void remove_last(struct list_t *list)
 {
