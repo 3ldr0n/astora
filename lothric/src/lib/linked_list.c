@@ -1,5 +1,11 @@
 #include "lib/linked_list.h"
 
+/**
+ * Malloc seguro, verifica se alocação ocorreu corretamente.
+ *
+ * size:
+ * Tamanho a ser alocado.
+ */
 static void *smalloc(const size_t size)
 {
     if (!size)
@@ -15,14 +21,12 @@ static void *smalloc(const size_t size)
     return mem;
 }
 
-void print_list(const struct list_t *list)
-{
-    for (struct node *item = list->head;item != NULL;item = item->next)
-        printf("%s ", item->value);
-
-    printf("\n");
-}
-
+/**
+ * Inicializa a lista vazia.
+ *
+ * list:
+ * Ponteiro para o lista.
+ */
 void instanciate_list(struct list_t *list)
 {
     list->head = NULL;
@@ -30,11 +34,25 @@ void instanciate_list(struct list_t *list)
     list->size = 0;
 }
 
+/**
+ * Verifica se a lista está vazia.
+ *
+ * list:
+ * Ponteiro para a lista.
+ */
 bool is_list_empty(const struct list_t *list)
 {
     return list->head == NULL;
 }
 
+/**
+ * Insere um elemento no final da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
+ * value:
+ * Valor a ser inserido.
+ */
 void append(struct list_t *list, const void *value)
 {
     struct node *new_node = (struct node *)smalloc(sizeof(struct node *));
@@ -53,6 +71,12 @@ void append(struct list_t *list, const void *value)
     list->size++;
 }
 
+/**
+ * Remove o primeiro elemento da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
+ */
 void remove_first(struct list_t *list)
 {
     if (is_list_empty(list)) return;
@@ -69,6 +93,12 @@ void remove_first(struct list_t *list)
     list->size--;
 }
 
+/**
+ * Remove o último elemento da lista.
+ *
+ * list:
+ * Ponteiro para a lista.
+ */
 void remove_last(struct list_t *list)
 {
     if (is_list_empty(list)) return;
