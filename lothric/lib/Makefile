@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS+=-Wall -Wextra -Werror -I../../include
+CFLAGS+=-Wall -Wextra -Werror -I../include
 
 all: linked_list
 
