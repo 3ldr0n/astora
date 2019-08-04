@@ -4,9 +4,9 @@
 int main()
 {
     struct map map;
-    new_map(&map);
+    map_new(&map);
 
     map_insert(&map, "key", "value");
 
-    delete_map(&map);
+    map_delete(&map);
 }

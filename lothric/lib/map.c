@@ -32,40 +32,40 @@ static void *scalloc(const size_t nitems, const size_t size)
     return mem;
 }
 
-static struct map_item *new_map_item(const char *key, void *value)
+static struct map_element *new_map_element(const char *key, void *value)
 {
-    struct map_item *new_item = smalloc(sizeof(struct map_item));
+    struct map_element *new_item = smalloc(sizeof(struct map_element));
     new_item->key = strdup(key);
     new_item->value = value;
     return new_item;
 }
 
-void new_map(struct map *map)
+void map_new(struct map *map)
 {
     map = smalloc(sizeof(struct map));
     map->max_size = 50;
     map->size = 0;
-    map->items = scalloc(map->max_size, sizeof(struct map_item *));
+    map->elements = scalloc(map->max_size, sizeof(struct map_element *));
 }
 
-static void delete_map_item(struct map_item *item)
+static void map_delete_element(struct map_element *item)
 {
     free(item->key);
     free(item->value);
     free(item);
 }
 
-void delete_map(struct map *map)
+void map_delete(struct map *map)
 {
-    if (map->items == NULL)
+    if (map->elements == NULL)
         return;
 
     for (uint i = 0;i < map->size;i++) {
-        struct map_item *item = map->items[i];
+        struct map_element *item = map->elements[i];
         if (item != NULL)
-            delete_map_item(item);
+            map_delete_element(item);
     }
-    free(map->items);
+    free(map->elements);
     free(map);
 }
 
@@ -90,15 +90,15 @@ static int map_get_hash(const char *key, const int buckets, const int attempts)
 
 void map_insert(struct map *map, const char *key, void *value)
 {
-    struct map_item *item = new_map_item(key, value);
+    struct map_element *item = new_map_element(key, value);
     int index = map_get_hash(item->key, map->max_size, 0);
 
-    struct map_item *aux = map->items[index];
+    struct map_element *aux = map->elements[index];
     for (int i = 1;aux != NULL;i++) {
         index = map_get_hash(item->key, map->max_size, i);
-        aux = map->items[index];
+        aux = map->elements[index];
     }
 
-    map->items[index] = item;
+    map->elements[index] = item;
     map->size++;
 }
