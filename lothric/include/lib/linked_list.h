@@ -25,6 +25,5 @@ bool is_list_empty(const struct list_t *list);
 void append(struct list_t *list, const void *value);
 void remove_first(struct list_t *list);
 void remove_last(struct list_t *list);
-void print_list(const struct list_t *list);
 
 #endif
