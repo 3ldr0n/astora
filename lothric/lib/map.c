@@ -1,38 +1,12 @@
-#include "lib/map.h"
-
 #include <math.h>
 
-static void *smalloc(const size_t size)
-{
-    if (!size)
-        return NULL;
+#include "lib/map.h"
+#include "lib/commons.h"
 
-    void *mem = malloc(size);
-
-    if (!mem) {
-        fprintf(stderr, "Fatal: Memory allocation error(%zu bytes malloc)\n", size);
-        exit(EXIT_FAILURE);
-    }
-
-    return mem;
-}
-
-static void *scalloc(const size_t nitems, const size_t size)
-{
-    if (!size)
-        return NULL;
-
-    void *mem = calloc(nitems, size);
-
-    if (!mem) {
-        fprintf(stderr, "Fatal: Memory allocation error (%zu bytes calloc)\n", size);
-        exit(EXIT_FAILURE);
-    }
-
-    return mem;
-}
-
-static struct map_element *new_map_element(const char *key, void *value)
+/**
+ *
+ */
+static struct map_element *map_new_element(const char *key, void *value)
 {
     struct map_element *new_item = smalloc(sizeof(struct map_element));
     new_item->key = strdup(key);
@@ -40,14 +14,23 @@ static struct map_element *new_map_element(const char *key, void *value)
     return new_item;
 }
 
-void map_new(struct map *map)
+/**
+ *
+ */
+void map_new(struct map *map, const size_t size)
 {
+    if (size == 0)
+        return;
+
     map = smalloc(sizeof(struct map));
-    map->max_size = 50;
-    map->size = 0;
-    map->elements = scalloc(map->max_size, sizeof(struct map_element *));
+    map->elements = (struct map_element **)smalloc(size * sizeof(struct map_element));
+    memset(map->elements, 0, size * sizeof(struct map_element));
+    map->size = size;
 }
 
+/**
+ *
+ */
 static void map_delete_element(struct map_element *item)
 {
     free(item->key);
@@ -55,12 +38,15 @@ static void map_delete_element(struct map_element *item)
     free(item);
 }
 
+/**
+ *
+ */
 void map_delete(struct map *map)
 {
     if (map->elements == NULL)
         return;
 
-    for (uint i = 0;i < map->size;i++) {
+    for (unsigned int i = 0;i < map->size;i++) {
         struct map_element *item = map->elements[i];
         if (item != NULL)
             map_delete_element(item);
@@ -69,36 +55,38 @@ void map_delete(struct map *map)
     free(map);
 }
 
-static int map_hash(const char *key, const int magic_number, const int buckets)
+/**
+ *
+ */
+static unsigned int hash(const char *key, const size_t map_size)
 {
-    long hash = 0;
-    int key_length = strlen(key);
-    for (int i = 0;i < key_length;i++) {
-        hash += (long) pow(magic_number, key_length - (i + 1)) * key[i];
-        hash = hash % buckets;
+    unsigned int hash = 0;
+    unsigned int i = 0;
+    while (key && key[i]) {
+        hash = (hash + key[i]) % map_size;
+        ++i;
     }
 
     return hash;
 }
 
-static int map_get_hash(const char *key, const int buckets, const int attempts)
+/**
+ *
+ */
+int map_insert(struct map *map, const char *key, void *value)
 {
-    const int hash_a = map_hash(key, MAP_PRIME_A, buckets);
-    const int hash_b = map_hash(key, MAP_PRIME_B, buckets);
-    return (hash_a + (attempts * (hash_b + 1))) % buckets;
-}
+    if (map == NULL)
+        return 1;
 
-void map_insert(struct map *map, const char *key, void *value)
-{
-    struct map_element *item = new_map_element(key, value);
-    int index = map_get_hash(item->key, map->max_size, 0);
+    struct map_element *element = map_new_element(key, value);
 
-    struct map_element *aux = map->elements[index];
-    for (int i = 1;aux != NULL;i++) {
-        index = map_get_hash(item->key, map->max_size, i);
-        aux = map->elements[index];
+    unsigned int index = hash(element->key, map->size);
+    struct map_element *tmp = map->elements[index];
+
+    if (tmp == NULL) {
+        map->elements[index] = element;
+        return 0;
     }
 
-    map->elements[index] = item;
-    map->size++;
+    return 0;
 }

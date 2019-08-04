@@ -5,7 +5,7 @@ all: linked_list map
 
 %: %.c
 	mkdir -p bin
-	$(CC) $(CFLAGS) $@.c tests/test_$@.c -o bin/test_$@
+	$(CC) $(CFLAGS) commons.c $@.c tests/test_$@.c -o bin/test_$@
 
 tests:
 	sh scripts/run_tests.sh

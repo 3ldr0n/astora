@@ -4,7 +4,7 @@
 int main()
 {
     struct map map;
-    map_new(&map);
+    map_new(&map, 1);
 
     map_insert(&map, "key", "value");
 

@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 #include "lib/linked_list.h"
 #include "lib/test.h"
 

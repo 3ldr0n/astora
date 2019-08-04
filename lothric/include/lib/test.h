@@ -1,3 +1,8 @@
+#ifndef TEST_H
+#define TEST_H
+
+#include <stdio.h>
+
 #define FAIL() printf("\nfailure in %s() line %d\n", __func__, __LINE__)
 #define _assert(test) do {  \
         tests_run++;        \
@@ -11,3 +16,5 @@
 
 int tests_run = 0;
 int tests_passed = 0;
+
+#endif
