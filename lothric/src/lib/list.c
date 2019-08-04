@@ -1,4 +1,4 @@
-#include "lib/linked_list.h"
+#include "lib/list.h"
 
 /**
  * Malloc seguro, verifica se alocação ocorreu corretamente.

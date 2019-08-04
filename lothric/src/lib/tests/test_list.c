@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-#include "lib/linked_list.h"
+#include "lib/list.h"
 #include "lib/test.h"
 
 int test_instanciate_list(struct list_t *list)
