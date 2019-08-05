@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS+=-Wall -Wextra -Werror -I../include -lm
 
-all: linked_list map
+all: list map
 
 %: %.c
 	mkdir -p bin
