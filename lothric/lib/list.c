@@ -1,4 +1,4 @@
-#include "lib/linked_list.h"
+#include "lib/list.h"
 
 /**
  * Malloc seguro, verifica se alocação ocorreu corretamente.
@@ -27,7 +27,7 @@ static void *smalloc(const size_t size)
  * list:
  * Ponteiro para o lista.
  */
-void instanciate_list(struct list_t *list)
+void list_instanciate(struct list_t *list)
 {
     list->head = NULL;
     list->tail = NULL;
@@ -40,7 +40,7 @@ void instanciate_list(struct list_t *list)
  * list:
  * Ponteiro para a lista.
  */
-bool is_list_empty(const struct list_t *list)
+bool list_is_empty(const struct list_t *list)
 {
     return list->head == NULL;
 }
@@ -53,13 +53,13 @@ bool is_list_empty(const struct list_t *list)
  * value:
  * Valor a ser inserido.
  */
-void append(struct list_t *list, const void *value)
+void list_append(struct list_t *list, const void *value)
 {
     struct node *new_node = (struct node *)smalloc(sizeof(struct node *));
     new_node->value = value;
     new_node->next = NULL;
 
-    if (is_list_empty(list)) {
+    if (list_is_empty(list)) {
         new_node->prev = NULL;
         list->tail = list->head = new_node;
     } else {
@@ -77,9 +77,9 @@ void append(struct list_t *list, const void *value)
  * list:
  * Ponteiro para a lista.
  */
-void remove_first(struct list_t *list)
+void list_remove_first(struct list_t *list)
 {
-    if (is_list_empty(list)) return;
+    if (list_is_empty(list)) return;
 
     if (list->head == list->tail) {
         free(list->head);
@@ -99,9 +99,9 @@ void remove_first(struct list_t *list)
  * list:
  * Ponteiro para a lista.
  */
-void remove_last(struct list_t *list)
+void list_remove_last(struct list_t *list)
 {
-    if (is_list_empty(list)) return;
+    if (list_is_empty(list)) return;
 
     if (list->head == list->tail) {
         free(list->head);
