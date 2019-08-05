@@ -32,18 +32,18 @@ struct list_t {
 };
 
 // inicializa a lista
-void instanciate_list(struct list_t *list);
+void list_instanciate(struct list_t *list);
 
 // verifica se é uma lista vazia
-bool is_list_empty(const struct list_t *list);
+bool list_is_empty(const struct list_t *list);
 
 // adiciona um elemento na lista
-void append(struct list_t *list, const void *value);
+void list_append(struct list_t *list, const void *value);
 
 // remove o primeiro elemento da lista
-void remove_first(struct list_t *list);
+void list_remove_first(struct list_t *list);
 
 // remove o ultimo elemento da lista
-void remove_last(struct list_t *list);
+void list_remove_last(struct list_t *list);
 
 #endif
